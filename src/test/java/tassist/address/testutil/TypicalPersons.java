@@ -1,7 +1,5 @@
 package tassist.address.testutil;
 
-import static tassist.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static tassist.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -28,37 +26,36 @@ import tassist.address.model.person.Person;
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
-            .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
+            .withEmail("alice@example.com")
             .withPhone("94351253").withClassNumber("T01").withStudentId("A0000000B")
-            .withGithub("https://github.com/alice").withTags("friends").withProgress("0").build();
+            .withTags("friends").withProgress("0").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
-            .withAddress("311, Clementi Ave 2, #02-25").withGithub("https://github.com/benson")
             .withEmail("johnd@example.com").withPhone("98765432").withClassNumber("T01")
             .withTags("owesMoney", "friends").withProgress("30").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz").withPhone("95352563")
-            .withEmail("heinz@example.com").withAddress("wall street").withProgress("50").build();
+            .withEmail("heinz@example.com").withProgress("50").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier").withPhone("87652533")
-            .withEmail("cornelia@example.com").withAddress("10th street").withTags("friends")
+            .withEmail("cornelia@example.com").withTags("friends")
             .withProgress("0").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
-            .withEmail("werner@example.com").withAddress("michegan ave").withProgress("60").build();
+            .withEmail("werner@example.com").withProgress("60").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
-            .withEmail("lydia@example.com").withAddress("little tokyo").withProgress("40").build();
+            .withEmail("lydia@example.com").withProgress("40").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
-            .withEmail("anna@example.com").withAddress("4th street").withProgress("5").build();
+            .withEmail("anna@example.com").withProgress("5").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier").withPhone("8482424")
-            .withEmail("stefan@example.com").withAddress("little india").withProgress("20").build();
+            .withEmail("stefan@example.com").withProgress("20").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
-            .withEmail("hans@example.com").withAddress("chicago ave").withProgress("90").build();
+            .withEmail("hans@example.com").withProgress("90").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withStudentId(VALID_STUDENTID_AMY)
+            .withEmail(VALID_EMAIL_AMY).withStudentId(VALID_STUDENTID_AMY)
             .withTags(VALID_TAG_FRIEND).withProgress(VALID_PROGRESS_AMY).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withStudentId(VALID_STUDENTID_BOB)
+            .withEmail(VALID_EMAIL_BOB).withStudentId(VALID_STUDENTID_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withProgress(VALID_PROGRESS_BOB).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

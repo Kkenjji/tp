@@ -37,6 +37,10 @@ public class ClassCommandParser implements Parser<ClassCommand> {
                 .filter(value -> !value.isEmpty())
                 .orElse(DEFAULT_CLASS);
 
-        return new ClassCommand(index, new ClassNumber(classNumber));
+        try {
+            return new ClassCommand(index, new ClassNumber(classNumber));
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(ClassCommand.MESSAGE_INVALID_CLASS, e);
+        }
     }
 }

@@ -1,7 +1,6 @@
 package tassist.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static tassist.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_CLASS;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_GITHUB;
@@ -25,7 +24,6 @@ import tassist.address.commons.util.ToStringBuilder;
 import tassist.address.logic.Messages;
 import tassist.address.logic.commands.exceptions.CommandException;
 import tassist.address.model.Model;
-import tassist.address.model.person.Address;
 import tassist.address.model.person.ClassNumber;
 import tassist.address.model.person.Email;
 import tassist.address.model.person.Github;
@@ -50,7 +48,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_CLASS + "CLASS NUMBER] "
             + "[" + PREFIX_STUDENTID + "STUDENTID] "
             + "[" + PREFIX_GITHUB + "GITHUB]"
@@ -110,14 +107,13 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ClassNumber updatedClassNumber = editPersonDescriptor.getClassNumber().orElse(personToEdit.getClassNumber());
         StudentId updatedStudentId = editPersonDescriptor.getStudentId().orElse(personToEdit.getStudentId());
         Github updatedGithub = editPersonDescriptor.getGithub().orElse(personToEdit.getGithub());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Progress updatedProgress = editPersonDescriptor.getProgress().orElse(personToEdit.getProgress());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedClassNumber,
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedClassNumber,
                 updatedStudentId, updatedGithub, updatedTags, updatedProgress);
     }
 
@@ -153,7 +149,6 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
         private ClassNumber classNumber;
         private StudentId studentId;
         private Github github;
@@ -170,7 +165,6 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
             setClassNumber(toCopy.classNumber);
             setStudentId(toCopy.studentId);
             setGithub(toCopy.github);
@@ -182,7 +176,8 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, studentId, tags, progress);
+            return CollectionUtil.isAnyNonNull(name, phone, email,
+                    classNumber, studentId, github, tags, progress);
         }
 
         public void setName(Name name) {
@@ -207,14 +202,6 @@ public class EditCommand extends Command {
 
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
         }
 
         public void setClassNumber(ClassNumber classNumber) {
@@ -281,7 +268,6 @@ public class EditCommand extends Command {
             return Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(classNumber, otherEditPersonDescriptor.classNumber)
                     && Objects.equals(studentId, otherEditPersonDescriptor.studentId)
                     && Objects.equals(github, otherEditPersonDescriptor.github)
@@ -295,7 +281,6 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
                     .add("classNumber", classNumber)
                     .add("studentId", studentId)
                     .add("github", github)

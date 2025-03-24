@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static tassist.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static tassist.address.logic.commands.CommandTestUtil.VALID_STUDENTID_AMY;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_CLASS;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_GITHUB;
 import static tassist.address.testutil.Assert.assertThrows;
@@ -26,11 +27,13 @@ import tassist.address.logic.commands.FindCommand;
 import tassist.address.logic.commands.GithubCommand;
 import tassist.address.logic.commands.HelpCommand;
 import tassist.address.logic.commands.ListCommand;
+import tassist.address.logic.commands.OpenCommand;
 import tassist.address.logic.parser.exceptions.ParseException;
 import tassist.address.model.person.ClassNumber;
 import tassist.address.model.person.Github;
 import tassist.address.model.person.NameContainsKeywordsPredicate;
 import tassist.address.model.person.Person;
+import tassist.address.model.person.StudentId;
 import tassist.address.testutil.EditPersonDescriptorBuilder;
 import tassist.address.testutil.PersonBuilder;
 import tassist.address.testutil.PersonUtil;
@@ -91,7 +94,15 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_github() throws Exception {
+    public void parseCommand_github_studentId() throws Exception {
+        final String github = "https://github.com/default";
+        GithubCommand command = (GithubCommand) parser.parseCommand(GithubCommand.COMMAND_WORD + " "
+                + VALID_STUDENTID_AMY + " " + PREFIX_GITHUB + github);
+        assertEquals(new GithubCommand(new StudentId(VALID_STUDENTID_AMY), new Github(github)), command);
+    }
+
+    @Test
+    public void parseCommand_github_index() throws Exception {
         final String github = "https://github.com/default";
         GithubCommand command = (GithubCommand) parser.parseCommand(GithubCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_GITHUB + github);
@@ -108,6 +119,13 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_open() throws Exception {
+        OpenCommand command = (OpenCommand) parser.parseCommand(
+                OpenCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new OpenCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test

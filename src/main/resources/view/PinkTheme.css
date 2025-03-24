@@ -1,0 +1,245 @@
+@import "BaseTheme.css";
+
+/* Color Variables */
+* {
+    /* Main colors from pink palette */
+    -background-color: #FADDE1;      /* Lightest pink - main background */
+    -card-color: #FFC4D6;            /* Light pink - for cards */
+    -menu-color: #FF87AB;            /* Medium pink - menu bar */
+    -result-color: #FF5D8F;          /* Deep pink - results area */
+    -status-color: #FF97B7;          /* Soft medium pink - status bar */
+    -accent1-color: #FFACC5;         /* Soft pink - primary accent */
+    -accent2-color: #FFCAD4;         /* Very light pink - secondary accent */
+    -accent3-color: #F4ACB7;         /* Dusty pink - tertiary accent */
+    -hover-color: #FFA6C1;           /* Medium-light pink - hover states */
+
+    /* Derived colors for interactions */
+    -text-color: #4a1526;            /* Dark pink-brown for text */
+    -text-light: #943148;            /* Lighter pink-brown for secondary text */
+    -hover-opacity: 0.9;
+}
+
+.root {
+    -fx-background-color: -background-color;
+}
+
+.background {
+    -fx-background-color: -background-color;
+}
+
+.pane-with-border {
+    -fx-background-color: -background-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.split-pane {
+    -fx-background-color: -background-color;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: derive(-background-color, -5%);
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: -background-color;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:hover, .list-cell:filled:selected {
+    -fx-background-color: transparent;
+}
+
+.person-card {
+    -fx-background-color: -card-color;
+    -fx-effect: dropshadow(gaussian, rgba(255, 182, 193, 0.2), 8, 0, 0, 1);
+}
+
+.person-card:hover {
+    -fx-background-color: -hover-color;
+    -fx-effect: dropshadow(gaussian, rgba(255, 182, 193, 0.3), 10, 0, 0, 2);
+}
+
+.person-card .id {
+    -fx-text-fill: -text-light;
+}
+
+.person-card .name {
+    -fx-text-fill: -text-color;
+}
+
+.person-card .details-label {
+    -fx-text-fill: -text-color;
+}
+
+.person-card .tags .label {
+    -fx-background-color: -accent1-color;
+    -fx-text-fill: -text-color;
+}
+
+.button {
+    -fx-background-color: -menu-color;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: -hover-color;
+}
+
+.text-field {
+    -fx-background-color: -accent2-color;
+    -fx-text-fill: -text-color;
+}
+
+.text-field:focused {
+    -fx-background-color: -accent2-color;
+    -fx-border-color: -menu-color;
+}
+
+.text-area {
+    -fx-background-color: -result-color;
+    -fx-text-fill: white;
+}
+
+.text-area .content {
+    -fx-background-color: -result-color;
+}
+
+.text-area:focused {
+    -fx-background-color: derive(-result-color, 10%);
+}
+
+.menu-bar {
+    -fx-background-color: -menu-color;
+}
+
+.menu-bar .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar .menu:hover {
+    -fx-background-color: -hover-color;
+}
+
+.menu-bar .menu-item {
+    -fx-background-color: -menu-color;
+}
+
+.menu-bar .menu-item .label {
+    -fx-text-fill: white;
+}
+
+.menu-bar .menu-item:hover {
+    -fx-background-color: -hover-color;
+}
+
+.context-menu {
+    -fx-background-color: -menu-color;
+    -fx-background-insets: 0;
+    -fx-padding: 2;
+    -fx-border-width: 0;
+    -fx-effect: none;
+}
+
+.menu-bar .context-menu {
+    -fx-background-color: -menu-color;
+    -fx-background-insets: 0;
+    -fx-padding: 2;
+    -fx-border-width: 0;
+    -fx-effect: none;
+}
+
+.status-bar {
+    -fx-background-color: -status-color;
+    -fx-text-fill: -text-color;
+}
+
+#resultDisplay {
+    -fx-background-color: -result-color;
+    -fx-text-fill: white;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+#resultDisplay .content {
+    -fx-background-color: -result-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+#resultDisplayPlaceholder {
+    -fx-background-color: -result-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+#resultDisplayPlaceholder .content {
+    -fx-background-color: -result-color;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0;
+}
+
+/* Scrollbar Styling */
+.scroll-bar {
+    -fx-background-color: derive(-background-color, -5%);
+}
+
+.scroll-bar:vertical .track,
+.scroll-bar:horizontal .track {
+    -fx-background-color: derive(-background-color, -5%);
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: -accent3-color;
+}
+
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover {
+    -fx-background-color: -hover-color;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: derive(-background-color, -5%);
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-background-color: -accent3-color;
+}
+
+/* Dialog Styling */
+.dialog-pane {
+    -fx-background-color: -background-color;
+}
+
+.dialog-pane > .content.label {
+    -fx-text-fill: -text-color;
+}
+
+.dialog-pane:header .header-panel {
+    -fx-background-color: -menu-color;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .button {
+    -fx-background-color: -menu-color;
+    -fx-text-fill: white;
+}
+
+.dialog-pane .button:hover {
+    -fx-background-color: -hover-color;
+}

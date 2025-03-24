@@ -11,9 +11,9 @@ public class StudentId {
 
     public static final String MESSAGE_CONSTRAINTS =
             "The Student ID must follow the format AXXXXXXXN, where:\n"
-                    + "- A is the uppercase letter 'A'.\n"
-                    + "- X represents seven digits (0-9).\n"
-                    + "- N is any uppercase letter from A to Z.\n"
+                    + "1. A is the uppercase letter 'A'.\n"
+                    + "2. X represents seven digits (0-9).\n"
+                    + "3. N is any uppercase letter from A to Z.\n"
                     + "Both 'A' and 'N' must be capitalized.";
     public static final String VALIDATION_REGEX = "^A\\d{7}[A-Z]$";
 
@@ -55,10 +55,5 @@ public class StudentId {
 
         StudentId otherStudentId = (StudentId) other;
         return value.equals(otherStudentId.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
     }
 }

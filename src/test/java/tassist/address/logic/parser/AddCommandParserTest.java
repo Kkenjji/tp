@@ -1,11 +1,8 @@
 package tassist.address.logic.parser;
 
 import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static tassist.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static tassist.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static tassist.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static tassist.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static tassist.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static tassist.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static tassist.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
@@ -24,14 +21,12 @@ import static tassist.address.logic.commands.CommandTestUtil.STUDENTID_DESC_AMY;
 import static tassist.address.logic.commands.CommandTestUtil.STUDENTID_DESC_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static tassist.address.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static tassist.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_STUDENTID_BOB;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static tassist.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -46,7 +41,6 @@ import org.junit.jupiter.api.Test;
 
 import tassist.address.logic.Messages;
 import tassist.address.logic.commands.AddCommand;
-import tassist.address.model.person.Address;
 import tassist.address.model.person.Email;
 import tassist.address.model.person.Name;
 import tassist.address.model.person.Person;
@@ -65,14 +59,14 @@ public class AddCommandParserTest {
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + STUDENTID_DESC_BOB + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
+                + STUDENTID_DESC_BOB + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 new AddCommand(expectedPerson));
 
 
         // multiple tags - all accepted
         Person expectedPersonMultipleTags = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND, VALID_TAG_HUSBAND)
                 .build();
-        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseSuccess(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                         new AddCommand(expectedPersonMultipleTags));
     }
@@ -80,7 +74,7 @@ public class AddCommandParserTest {
     @Test
     public void parse_repeatedNonTagValue_failure() {
         String validExpectedPersonString = NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + ADDRESS_DESC_BOB + STUDENTID_DESC_BOB + TAG_DESC_FRIEND + PROGRESS_DESC_BOB;
+                + STUDENTID_DESC_BOB + TAG_DESC_FRIEND + PROGRESS_DESC_BOB;
 
         // multiple names
         assertParseFailure(parser, NAME_DESC_AMY + validExpectedPersonString,
@@ -94,19 +88,15 @@ public class AddCommandParserTest {
         assertParseFailure(parser, EMAIL_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
-        // multiple addresses
-        assertParseFailure(parser, ADDRESS_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
-
         // multiple progresses
         assertParseFailure(parser, PROGRESS_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PROGRESS));
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + ADDRESS_DESC_AMY
+                validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
                         + STUDENTID_DESC_AMY + PROGRESS_DESC_AMY + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_EMAIL, PREFIX_PHONE,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE,
                         PREFIX_STUDENTID, PREFIX_PROGRESS));
 
         // invalid value followed by valid value
@@ -122,10 +112,6 @@ public class AddCommandParserTest {
         // invalid phone
         assertParseFailure(parser, INVALID_PHONE_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
-
-        // invalid address
-        assertParseFailure(parser, INVALID_ADDRESS_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // invalid studentId
         assertParseFailure(parser, INVALID_STUDENTID_DESC + validExpectedPersonString,
@@ -148,10 +134,6 @@ public class AddCommandParserTest {
         assertParseFailure(parser, validExpectedPersonString + INVALID_PHONE_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
-        // invalid address
-        assertParseFailure(parser, validExpectedPersonString + INVALID_ADDRESS_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
-
         // invalid studentId
         assertParseFailure(parser, validExpectedPersonString + INVALID_STUDENTID_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_STUDENTID));
@@ -166,7 +148,7 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + STUDENTID_DESC_AMY + PROGRESS_DESC_AMY, new AddCommand(expectedPerson));
     }
 
@@ -175,74 +157,65 @@ public class AddCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing name prefix
-        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + STUDENTID_DESC_BOB, expectedMessage);
 
         // missing phone prefix
-        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB
                         + STUDENTID_DESC_BOB, expectedMessage);
 
         // missing email prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + ADDRESS_DESC_BOB
-                        + STUDENTID_DESC_BOB, expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_ADDRESS_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB
                         + STUDENTID_DESC_BOB, expectedMessage);
 
         // missing studentId prefix
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + VALID_STUDENTID_BOB, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB
+        assertParseFailure(parser, VALID_NAME_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB
                         + STUDENTID_DESC_BOB, expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
-        assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + INVALID_PHONE_DESC + EMAIL_DESC_BOB
                 + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 Phone.MESSAGE_CONSTRAINTS);
 
         // invalid email
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + INVALID_EMAIL_DESC
                 + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 Email.MESSAGE_CONSTRAINTS);
 
-        // invalid address
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
-                + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
-                Address.MESSAGE_CONSTRAINTS);
-
         //invalid studentId
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + INVALID_STUDENTID_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 StudentId.MESSAGE_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + STUDENTID_DESC_BOB + INVALID_TAG_DESC + VALID_TAG_FRIEND + PROGRESS_DESC_BOB,
                 Tag.MESSAGE_CONSTRAINTS);
 
         // invalid progress
-        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB
+        assertParseFailure(parser, NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + INVALID_PROGRESS_DESC,
                 Progress.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB + INVALID_ADDRESS_DESC
+        assertParseFailure(parser, INVALID_NAME_DESC + INVALID_PHONE_DESC + EMAIL_DESC_BOB
                 + STUDENTID_DESC_BOB + PROGRESS_DESC_BOB, Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
         assertParseFailure(parser, PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + STUDENTID_DESC_BOB + ADDRESS_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
+                + STUDENTID_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + PROGRESS_DESC_BOB,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

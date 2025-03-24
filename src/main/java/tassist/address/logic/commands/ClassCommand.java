@@ -26,12 +26,16 @@ public class ClassCommand extends Command {
             + "by the index. " // will be changed to student id once ready
             + "Existing tutorial class will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_CLASS + " [Tutorial Class Number]\n"
+            + PREFIX_CLASS + " T/R + [Tutorial Class Number xx (xx = 01-99)]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_CLASS + " T01";
 
     public static final String MESSAGE_ADD_CLASS_SUCCESS = "Assigned tutorial class to student: %1$s";
     public static final String MESSAGE_REMOVE_CLASS_SUCCESS = "Removed tutorial class from student: %1$s";
+    public static final String MESSAGE_INVALID_CLASS =
+            "Class numbers should be either 'No tutorial assigned'\n"
+                    + "+ or of the format 'Txx/Rxx' (where xx is 01-99).\n"
+                    + "'T/R' must be capitalized.";
 
     private final Index index;
     private final ClassNumber classNumber;
@@ -59,7 +63,7 @@ public class ClassCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = new Person(
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), classNumber, personToEdit.getStudentId(),
+                classNumber, personToEdit.getStudentId(),
                 personToEdit.getGithub(), personToEdit.getTags(), personToEdit.getProgress());
 
         model.setPerson(personToEdit, editedPerson);

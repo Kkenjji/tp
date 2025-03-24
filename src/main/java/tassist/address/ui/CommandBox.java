@@ -32,6 +32,20 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
+     * Returns the current command text.
+     */
+    public String getCommandText() {
+        return commandTextField.getText();
+    }
+
+    /**
+     * Clears the command text.
+     */
+    public void clearCommandText() {
+        commandTextField.setText("");
+    }
+
+    /**
      * Handles the Enter button pressed event.
      */
     @FXML

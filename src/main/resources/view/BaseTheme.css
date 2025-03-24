@@ -1,0 +1,152 @@
+/* Base Layout and Structure */
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.background, .pane-with-border {
+    -fx-border-width: 0;
+}
+
+.split-pane {
+    -fx-background-insets: 0;
+    -fx-padding: 10;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+
+/* List and Card Layout */
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 8;
+    -fx-border-width: 0;
+}
+
+.list-cell {
+    -fx-padding: 8 4;
+}
+
+.person-card {
+    -fx-padding: 16;
+    -fx-spacing: 10;
+    -fx-background-radius: 8;
+}
+
+.person-card .id {
+    -fx-font-size: 14px;
+}
+
+.person-card .name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.person-card .details-label {
+    -fx-font-size: 14px;
+    -fx-padding: 2 0;
+}
+
+.person-card .tags {
+    -fx-hgap: 6;
+    -fx-vgap: 4;
+}
+
+.person-card .tags .label {
+    -fx-padding: 4 12;
+    -fx-background-radius: 12;
+    -fx-font-size: 12px;
+}
+
+/* Input Elements */
+.button {
+    -fx-padding: 8 20;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+
+.text-field {
+    -fx-background-radius: 6;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+}
+
+.text-area {
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+    -fx-wrap-text: true;
+    -fx-font-size: 14px;
+    -fx-background-insets: 0;
+}
+
+.text-area .content {
+    -fx-background-radius: 6;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+/* Menu and Context Menu */
+.menu-bar {
+    -fx-padding: 2;
+}
+
+.menu-item {
+    -fx-padding: 8 16;
+}
+
+.context-menu {
+    -fx-background-insets: 0;
+    -fx-padding: 2;
+    -fx-border-width: 0;
+    -fx-effect: none;
+}
+
+/* Status Bar and Result Display */
+.status-bar {
+    -fx-padding: 8;
+    -fx-font-size: 12px;
+}
+
+#resultDisplay {
+    -fx-font-size: 14px;
+    -fx-background-radius: 6;
+    -fx-padding: 8;
+    -fx-background-insets: 0;
+}
+
+/* Scrollbar Base Structure */
+.scroll-bar {
+    -fx-background-radius: 0;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-radius: 4;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-padding: 4;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-padding: 2;
+}
+
+/* Dialog Base Structure */
+.dialog-pane > .content.label {
+    -fx-font-size: 14px;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-size: 16px;
+}
+
+.dialog-pane .button {
+    -fx-wrap-text: true;
+    -fx-cursor: hand;
+    -fx-padding: 8 20;
+    -fx-background-radius: 6;
+}

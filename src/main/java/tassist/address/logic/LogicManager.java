@@ -11,6 +11,7 @@ import tassist.address.commons.core.LogsCenter;
 import tassist.address.logic.commands.Command;
 import tassist.address.logic.commands.CommandResult;
 import tassist.address.logic.commands.ConfirmableCommand;
+import tassist.address.logic.commands.OpenCommand;
 import tassist.address.logic.commands.exceptions.CommandException;
 import tassist.address.logic.parser.AddressBookParser;
 import tassist.address.logic.parser.exceptions.ParseException;
@@ -23,25 +24,33 @@ import tassist.address.storage.Storage;
  * The main LogicManager of the app.
  */
 public class LogicManager implements Logic {
-    public static final String FILE_OPS_ERROR_FORMAT = "Could not save data due to the following error: %s";
-
+    public static final String FILE_OPS_ERROR_FORMAT = "Could not save data to file: %s";
     public static final String FILE_OPS_PERMISSION_ERROR_FORMAT =
-            "Could not save data to file %s due to insufficient permissions to write to the file or the folder.";
+            "Could not save data to file due to permission error: %s";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     private final Model model;
     private final Storage storage;
     private final AddressBookParser addressBookParser;
+    private final OpenCommand.BrowserService browserService;
     private ConfirmableCommand pendingConfirmation = null;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
      */
     public LogicManager(Model model, Storage storage) {
+        this(model, storage, new OpenCommand.DesktopBrowserService());
+    }
+
+    /**
+     * Constructs a {@code LogicManager} with the given {@code Model}, {@code Storage}, and {@code BrowserService}.
+     */
+    public LogicManager(Model model, Storage storage, OpenCommand.BrowserService browserService) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        this.addressBookParser = new AddressBookParser();
+        this.browserService = browserService;
     }
 
     @Override
@@ -63,6 +72,12 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         Command command = addressBookParser.parseCommand(commandText);
+
+        if (command instanceof OpenCommand) {
+            OpenCommand openCommand = (OpenCommand) command;
+            command = new OpenCommand(openCommand.getTargetIndex(), browserService);
+        }
+
         commandResult = command.execute(model);
 
         if (commandResult.requiresConfirmation()) {

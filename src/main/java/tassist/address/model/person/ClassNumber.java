@@ -10,7 +10,9 @@ import static tassist.address.commons.util.AppUtil.checkArgument;
 public class ClassNumber {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Class numbers should be either 'No tutorial assigned' or of the format 'Txx' (where xx is 01-99).";
+            "Class numbers should be either 'No tutorial assigned' "
+            + "or of the format 'Txx/Rxx' (where xx is 01-99)."
+            + "'T/R' must be capitalized.";
 
     public static final String VALIDATION_REGEX = "^(T|R)(0[1-9]|[1-9][0-9])$";
     public static final String DEFAULT_CLASS = "No tutorial assigned";
