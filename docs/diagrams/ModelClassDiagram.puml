@@ -13,12 +13,21 @@ Class ModelManager
 Class UserPrefs
 
 Class UniquePersonList
+Class ClassNumber
 Class Person
-Class Address
-Class Email
 Class Name
 Class Phone
+Class Email
+Class ClassNumber
+Class StudentId
+Class Github
+Class ProjectTeam
 Class Tag
+Class Progress
+
+Class UniqueTimedEventList
+Class "{abstract}\nTimedEvent" as TimedEvent
+Class Assignment
 
 Class I #FFFFFF
 }
@@ -36,19 +45,33 @@ ModelManager -right-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
+AddressBook *--> "1" UniqueTimedEventList
 UniquePersonList --> "~* all" Person
 Person *--> Name
 Person *--> Phone
 Person *--> Email
-Person *--> Address
 Person *--> "*" Tag
+Person *--> ClassNumber
+Person *--> StudentId
+Person *--> Github
+Person *--> ProjectTeam
+Person *--> Progress
+Person *--> "*" TimedEvent
+
+UniqueTimedEventList --> TimedEvent
+TimedEvent <|-- Assignment
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
+UniqueTimedEventList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+Phone -[hidden]right-> Email
+Email -[hidden]right-> ClassNumber
+ClassNumber -[hidden]right-> StudentId
+StudentId -[hidden]right-> Github
+Github -[hidden]right-> ProjectTeam
+ProjectTeam -[hidden]right-> Progress
 
 ModelManager --> "~* filtered" Person
 @enduml

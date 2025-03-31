@@ -9,7 +9,6 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) to easily tra
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
-
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
@@ -31,11 +30,8 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) to easily tra
 7. A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-8. TAssist allows users to personalize the appearance of the application by switching between different color themes.<br>
-    Available themes: Dark, Bright, Pink
-
-9. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+8. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
@@ -47,9 +43,23 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) to easily tra
 
    * `exit` : Exits the app.
 
-10. Refer to the [Features](#features) below for details of each command.
+9. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+## Tips
+
+1. TAssist allows users to personalize the appearance of the application by switching between different color themes.<br>
+   Users can press the `F2` key to cycle through the available themes. <br>
+   Available themes: Dark, Bright, Pink
+
+2. Viewing Upcoming Events Calendar: `F3`
+   TAssist provides a calendar-style view to help you visualize upcoming assignments and timed events. Events are grouped and displayed by their due dates, along with the list of students assigned to each.
+    * Press the F3 key to open the calendar-style event viewer.
+    * Display includes: Assignment names, Event type (e.g., assignment), Assigned students, Dates grouped chronologically
+    * An empty calendar will be shown if there are no current Assignments.
+
+--------------------------------------------------------------------------------------------------------------------
+
 
 ## Features
 
@@ -77,8 +87,8 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) to easily tra
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
-
+Opens the User Guide in your default browser and displays a message containing the link. <br>
+If the browser does not open automatically, you can manually copy and paste the link into your browser.
 ![help message](images/helpMessage.png)
 
 Format: `help`
@@ -87,15 +97,15 @@ Format: `help`
 
 Adds a student to the student list.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL s/STUDENT_ID [g/GITHUB_URL] [t/TAG]…​ [pr/PROGRESS]`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL s/STUDENT_ID [g/GITHUB_URL] [pt/TEAM] [c/CLASS_NUMBER] [t/TAG]…​ [pr/PROGRESS]`
 
 <div markdown="span" class="alert alert-primary">
 :bulb: <strong>Tip:</strong> A student can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com s/A0000000B t/friends t/owesMoney pr/50`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com s/A0123456U g/https://github.com/betsy p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com s/A0000000B pt/ProjectTeam1 c/T01 t/friends t/owesMoney pr/50`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com s/A0123456U g/https://github.com/betsy p/1234567 t/LifeScienceMajor`
 
 ### Listing all students : `list`
 
@@ -106,23 +116,23 @@ All parameters are optional. Filters and sorting can be used together or indepen
 
 #### Filter Options
 `FILTER_TYPE:`<br>
-* progress: Filters students whose progress is less than or equal to the provided value. <br>
-* course: (Not yet implemented) Will filter by existing course codes.<br>
-* team: (Not yet implemented) Will filter by existing team names.
+* progress: Filters students whose progress is less than or equal to the provided value. 
+* team: Filters by existing team names.
+* course: (Not yet implemented) Will filter by existing course codes.
 
 `FILTER_VALUE:`<br>
-* progress: an integer between 0 and 100. <br>
-* course: (Not yet implemented) must match an existing course value.<br>
-* team: (Not yet implemented) must match an existing team value.
+* PROGRESS: an integer between 0 and 100.
+* TEAM: must match an existing team name. 
+* COURSE: (Not yet implemented) must match an existing course value.
 
 #### Sort Options
 `SORT_TYPE:`<br>
 * name
 * progress
-* github.<br>
+* github
 
 `SORT_ORDER:`<br>
-* asc — Ascending (A → Z or lowest → highest). <br>
+* asc — Ascending (A → Z or lowest → highest).
 * des — Descending (Z → A or highest → lowest).
 
 Examples:
@@ -134,12 +144,14 @@ Examples:
   Displays all students, sorted by Github username in ascending lexicographical order.
 * `list f/progress fv/50 s/name o/des`<br>
   Displays students with progress ≤ 50, sorted by name in descending lexicographical order.
+* `list f/team fv/Bang Bang`<br>
+  Displays students with the Team name 'Bang Bang', matched case-insensitively.
 
 ### Editing a student : `edit`
 
 Edits an existing student in the student list.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/CLASS] [s/STUDENTID] [g/GITHUB_URL] [t/TAG]…​ [pr/PROGRESS]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/_NUMBER] [s/STUDENTID] [g/GITHUB_URL] [pt/TEAM] [c/CLASS_NUMBER] [t/TAG]…​ [pr/PROGRESS]`
 
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -156,69 +168,132 @@ Examples:
 
 ### Locating students by name: `find`
 
-Finds students whose names contain any of the given keywords.
+Finds students whose names contain any of the given keywords, or whose student ID matches exactly.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find NAME [MORE_NAMES]` or `find STUDENT_ID`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* The order of the names does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Students matching at least one keyword will be returned (i.e. `OR` search).
+* Students matching at least one name will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* If a valid student ID is entered (e.g. `A1234567B`), it will return the student with an exact match on that ID.
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find john alice'](images/UserGuideFindCommand1.png)
+* `find A1234567B` returns the student with that exact student ID
 
 ### Assigning or Removing a tutorial class: `class`
 
-Assigns a **tutorial class** to a student identified by their displayed index.
+Assigns or removes a **tutorial/recitation class** for a student identified by either their displayed index or student ID
 
-Format: `class INDEX c/CLASS_NUMBER`
+Format: `class INDEX c/CLASS_NUMBER` or `class STUDENT_ID c/CLASS_NUMBER`
 
-* `Txx`or `Rxx` where xx is integer from 01 to 99 (e.g., T01, T15, R05, R99)
+* Must be either `Txx`or `Rxx` where xx is integer from 01 to 99 (e.g., T01, T15, R05, R99)
     * Note: 'T' and 'R' must be uppercase.
     * 'T' and 'R' represent Tutorial and Recitation respectively.
-* Edits the `CLASS_NUMBER` of the student at the specified `INDEX`
+* Assigns or updates the class of the student at the specified `INDEX` or matching `STUDENT_ID`
 * The index refers to the index number shown in the displayed student list.
+* To remove a class assignment, leave `c/` empty (i.e. `c/` with no value)
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
 * `class 1 c/T01` <br>
-   Assigns T01 to the 1st student in the list.
-* `class 3 c/R05`<br>
-   Assigns R05 to the 3rd student in the list.
+   Assigns class T01 to the 1st student in the list.
 * `class 2 c/` <br>
    Removes the class from the 2nd student.
+* `class A1234567B c/R05`<br>
+   Assigns class R05 to the student with student ID `A1234567B`.
 
 ### Editing a student GitHub Link: `github`
 
-Updates the **GitHub URL** of the student identified by their displayed index.
+Updates the GitHub URL of a student, identified by either their displayed index or student ID.
 
-Format: `github INDEX g/GITHUB_URL`
+Format: `github INDEX g/GITHUB_URL` or `github STUDENT_ID g/GITHUB_URL`
 
-* Edits the `GITHUB_URL` of the student at the specified `INDEX`
+* Edits the `GITHUB_URL` of the student at the specified `INDEX` or matching `STUDENT_ID`.
 * The index refers to the index number shown in the displayed student list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* The GitHub URL must be a valid URL (e.g. starts with `https://github.com/`)
 
 Examples:
 * `github 2 g/https://github.com/alice` <br>
   Updates the 2nd student's GitHub link to `https://github.com/alice`.
+* `github A1234567B g/https://github.com/bob-dev`
+  Updates the GitHub link for the student with student ID `A1234567B`.
 
 ### Opening a student's GitHub page: `open`
 
-Opens the GitHub page of the student at the specified `INDEX` in your default web browser.
+Opens the GitHub page of a student, identified by either their displayed **index** or **student ID**, in your default web browser.
 
-Format: `open INDEX`
+Format: `open INDEX` or `open STUDENT_ID`
 
-* Opens the `GITHUB_URL` of the student at the given `INDEX`.
+* Opens the `GITHUB_URL` of the student at the specified `INDEX` or matching `STUDENT_ID`.
 * The index refers to the index number shown in the displayed student list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Example:
 * `list` followed by `open 1` opens the GitHub page of the first student shown in the list.
+* `open A1234567B`
+  Opens the GitHub page of the student with student ID `A1234567B`.
+
+### Adding a new assignment/timed event: `assignment`
+
+Adds a timed event (such as an assignment, project, or deadline) to the event list, which can be used to track important upcoming dates.
+
+Format: `assignment n/NAME d/DATE`
+
+* `n/NAME`: The title or description of the assignment/event.
+* `d/DATE`: The deadline for the assignment/event.
+* Accepted date formats: `dd-MM-yyyy`, `dd-MM-yy`, or `dd-MM` (defaults to current year)
+* The date must be a valid future date.
+
+Example:
+* `assignment n/CS2103T Project d/30-01-2025` <br>
+  Adds a timed event named "CS2103T Project" with deadline on January 30, 2025.
+* `assignment n/Quiz 1 d/10-04` <br>
+  Adds an event named "Quiz 1" with the deadline on April 10 of the current year.
+
+### Viewing the timed event list: `view`
+
+Lists all timed events in the system.
+
+Format: `view`
+
+### Assigning a timed event/assignment: `assign`
+
+Assigns a timed event using index in time event list to one or more students identified by their displayed index, student ID, or class number.
+
+Format: `assign TIMED_EVENT_INDEX STUDENT_INDEX` or `assign TIMED_EVENT_INDEX STUDENT_ID` or `assign TIMED_EVENT_INDEX CLASS_NUMBER`
+
+* `TIMED_EVENT_INDEX`: The index of the timed event shown in the timed event list (must be a positive integer).
+* `STUDENT_INDEX`: The index of the student from the displayed student list (must be a positive integer).
+
+Examples:
+* `assign 1 2`
+  Assigns the first timed event to the 2nd student in the list.
+
+* `assign 2 A1234567B`
+  Assigns the second timed event to the student with student ID A1234567B.
+
+* `assign 1 T01`
+  Assigns the first timed event to all students in class T01.
+
+### Unassigning and Removing a Timed Event: `unassign`
+
+Removes a timed event from all assigned students and deletes the event from the timed event list.
+
+Format: `unassign TIMED_EVENT_INDEX`
+
+* `TIMED_EVENT_INDEX`: The index of the timed event shown in the timed event list (must be a positive integer).
+* Unassigns the specified timed event from all students who were previously assigned to it.
+* Removes the timed event entirely from the list.
+
+Example:
+* `unassign 1`
+  Unassigns the first timed event from all students and deletes the event from the list.
 
 ### Deleting a student : `delete`
 
@@ -263,7 +338,7 @@ If your changes to the data file makes its format invalid, TAssist will discard 
 Furthermore, certain edits can cause TAssist to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v1.4]`
+### Archiving data files `[coming in v1.5]`
 
 _Details coming soon ..._
 
@@ -287,13 +362,17 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL s/STUDENT_ID [g/GITHUB_URL] [c/CLASS_NUMBER] [t/TAG]…​ [pr/PROGRESS]` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com s/A0000000B g/https://github.com/username c/T02 t/friends t/owesMoney pr/50`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL s/STUDENT_ID [g/GITHUB_URL] [pt/TEAM] [c/CLASS_NUMBER] [t/TAG]…​ [pr/PROGRESS]` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com s/A0000000B g/https://github.com/username c/T02 t/friends t/owesMoney pr/50`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [c/CLASS] [s/STUDENTID] [g/GITHUB_URL] [t/TAG]…​ [pr/PROGRESS]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [s/STUDENTID] [g/GITHUB_URL] [pt/TEAM] [c/CLASS_NUMBER] [t/TAG]…​ [pr/PROGRESS]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Find** | `find KEYWORD [MORE_KEYWORDS]` or `find STUDENT_ID` <br> e.g., `find James Jake`, `find A1234567B`
 **List** | `list [f/FILTER_TYPE fv/FILTER_VALUE] [s/SORT_TYPE o/SORT_ORDER]`<br> e.g.,`list f/progress fv/50 s/name o/des`
-**Class** | `class INDEX c/CLASS_NUMBER` <br> e.g.,`class 1 c/T01`
-**Github** | `github INDEX g/GITHUB_URL` <br> e.g.,`github 2 g/https://github.com/alice`
-**Open** | `open INDEX` <br> e.g., `open 3`
+**Class** | `class INDEX c/CLASS_NUMBER` or `class STUDENT_ID c/CLASS_NUMBER` <br> e.g.,`class 1 c/T01`, `class A7654321B c/T02`
+**Github** | `github INDEX g/GITHUB_URL` or `github STUDENT_ID g/GITHUB_URL` <br> e.g.,`github 2 g/https://github.com/alice`, `github A1234567B g/https://github.com/alice`
+**Open** | `open INDEX` or `open STUDENT_ID` <br> e.g., `open 3`, `open A7654321B`
+**Assignment** | `assignment n/NAME d/DATE` <br> e.g.,`assignment n/CS2103T Project d/30-01-2025`
+**View** | `view`
+**Assign** | `assign TIMED_EVENT_INDEX STUDENT_INDEX` or `assign TIMED_EVENT_INDEX STUDENT_ID` or `assign TIMED_EVENT_INDEX CLASS_NUMBER` <br> e.g., `assign 1 2`, `assign 2 A1234567B`,`assign 2 T03`
+**Unassign** | `unassign TIMED_EVENT_INDEX` <br> e.g., `unassign 1`
 **Help** | `help`
