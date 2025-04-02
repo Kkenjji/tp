@@ -29,8 +29,8 @@ public class ClassCommand extends Command {
             + ": Assign a tutorial class to the student identified"
             + "by the index in the displayed list or student ID.\n"
             + "Existing tutorial class will be overwritten by the input.\n"
-            + "Parameters: INDEX (must be a positive integer) or STUDENTID\n"
-            + " + " + PREFIX_CLASS + " T or R + [Tutorial Class Number xx (xx = 01-99)]\n"
+            + "Parameters: INDEX (must be a positive integer) or STUDENTID "
+            + PREFIX_CLASS + " T or R + [Tutorial Class Number xx (xx = 01-99)]\n"
             + "Example: " + COMMAND_WORD + " 1 " + PREFIX_CLASS + "T01\n"
             + "or " + COMMAND_WORD + " A0123456B " + PREFIX_CLASS + "T01";
 
