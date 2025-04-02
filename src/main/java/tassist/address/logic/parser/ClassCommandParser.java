@@ -5,7 +5,6 @@ import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static tassist.address.logic.commands.ClassCommand.MESSAGE_INVALID_CLASS;
 import static tassist.address.logic.commands.ClassCommand.MESSAGE_USAGE;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_CLASS;
-import static tassist.address.logic.parser.CliSyntax.PREFIX_GITHUB;
 import static tassist.address.model.person.StudentId.VALIDATION_REGEX;
 
 import java.util.logging.Logger;
@@ -41,7 +40,7 @@ public class ClassCommandParser implements Parser<ClassCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLASS);
 
         String classNumberString = argMultimap.getValue(PREFIX_CLASS).orElse("");
-        if (argMultimap.getValue(PREFIX_GITHUB).isEmpty()) {
+        if (argMultimap.getValue(PREFIX_CLASS).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 

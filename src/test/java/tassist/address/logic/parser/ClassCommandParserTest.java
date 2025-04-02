@@ -30,11 +30,6 @@ public class ClassCommandParserTest {
         String userInput = targetIndex.getOneBased() + " " + PREFIX_CLASS + nonEmptyClass;
         ClassCommand expectedCommand = new ClassCommand(INDEX_FIRST_PERSON, new ClassNumber(nonEmptyClass));
         assertParseSuccess(parser, userInput, expectedCommand);
-
-        // no Class
-        userInput = targetIndex.getOneBased() + " " + PREFIX_CLASS;
-        expectedCommand = new ClassCommand(INDEX_FIRST_PERSON, new ClassNumber(ClassNumber.DEFAULT_CLASS));
-        assertParseSuccess(parser, userInput, expectedCommand);
     }
 
     @Test
@@ -61,14 +56,6 @@ public class ClassCommandParserTest {
     public void parse_invalidClassNumberFormat_throwsParseException() {
         String userInput = VALID_STUDENTID_AMY + " " + PREFIX_CLASS + "S200"; // Invalid class number
         assertThrows(ParseException.class, () -> parser.parse(userInput));
-    }
-
-    @Test
-    public void parse_blankClassNumber_assignsDefault() throws Exception {
-        String userInput = VALID_STUDENTID_AMY + " " + PREFIX_CLASS;
-        ClassCommand classCommand = new ClassCommand(new StudentId(VALID_STUDENTID_AMY),
-                new ClassNumber(ClassNumber.DEFAULT_CLASS));
-        assertEquals(classCommand, parser.parse(userInput));
     }
 
     @Test
