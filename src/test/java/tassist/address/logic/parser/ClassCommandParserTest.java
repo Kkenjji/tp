@@ -59,6 +59,13 @@ public class ClassCommandParserTest {
     }
 
     @Test
+    public void parse_blankClassNumber_failure() throws Exception {
+        String userInput = VALID_STUDENTID_AMY + " " + PREFIX_CLASS;
+        String expectedMessage = ClassCommand.MESSAGE_INVALID_CLASS;
+        assertParseFailure(parser, userInput, expectedMessage);
+    }
+
+    @Test
     public void parse_repeatedClassValue_failure() {
         String validExpectedCommandString = VALID_STUDENTID_AMY + " " + PREFIX_CLASS + VALID_CLASS_BOB;
 
