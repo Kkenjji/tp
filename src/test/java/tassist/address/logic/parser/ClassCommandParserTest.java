@@ -1,6 +1,7 @@
 package tassist.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static tassist.address.logic.Messages.getErrorMessageForDuplicatePrefixes;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_CLASS_AMY;
 import static tassist.address.logic.commands.CommandTestUtil.VALID_CLASS_BOB;
@@ -61,7 +62,8 @@ public class ClassCommandParserTest {
     @Test
     public void parse_blankClassNumber_failure() throws Exception {
         String userInput = VALID_STUDENTID_AMY + " " + PREFIX_CLASS;
-        String expectedMessage = ClassCommand.MESSAGE_INVALID_CLASS;
+        System.out.println(userInput);
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClassCommand.MESSAGE_USAGE);
         assertParseFailure(parser, userInput, expectedMessage);
     }
 

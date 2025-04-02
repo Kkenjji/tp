@@ -40,7 +40,7 @@ public class ClassCommandParser implements Parser<ClassCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLASS);
 
         String classNumberString = argMultimap.getValue(PREFIX_CLASS).orElse("");
-        if (argMultimap.getValue(PREFIX_CLASS).isEmpty()) {
+        if (classNumberString.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ClassCommand.MESSAGE_USAGE));
         }
