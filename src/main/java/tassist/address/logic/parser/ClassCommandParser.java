@@ -3,7 +3,6 @@ package tassist.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static tassist.address.logic.commands.ClassCommand.MESSAGE_INVALID_CLASS;
-import static tassist.address.logic.commands.ClassCommand.MESSAGE_USAGE;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_CLASS;
 import static tassist.address.model.person.StudentId.VALIDATION_REGEX;
 
@@ -34,14 +33,16 @@ public class ClassCommandParser implements Parser<ClassCommand> {
         String trimmedArgs = argMultimap.getPreamble().trim();
 
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ClassCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLASS);
 
         String classNumberString = argMultimap.getValue(PREFIX_CLASS).orElse("");
         if (argMultimap.getValue(PREFIX_CLASS).isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ClassCommand.MESSAGE_USAGE));
         }
 
         ClassNumber classNumber;
@@ -56,7 +57,8 @@ public class ClassCommandParser implements Parser<ClassCommand> {
                 StudentId studentId = ParserUtil.parseStudentId(trimmedArgs);
                 return new ClassCommand(studentId, classNumber);
             } catch (IllegalValueException ive) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), ive);
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        ClassCommand.MESSAGE_USAGE), ive);
             }
         }
 
@@ -65,7 +67,8 @@ public class ClassCommandParser implements Parser<ClassCommand> {
             index = ParserUtil.parseIndex(trimmedArgs);
             return new ClassCommand(index, classNumber);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ClassCommand.MESSAGE_USAGE), ive);
         }
     }
 }
