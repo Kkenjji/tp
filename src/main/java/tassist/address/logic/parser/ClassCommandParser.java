@@ -5,7 +5,7 @@ import static tassist.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static tassist.address.logic.commands.ClassCommand.MESSAGE_INVALID_CLASS;
 import static tassist.address.logic.commands.ClassCommand.MESSAGE_USAGE;
 import static tassist.address.logic.parser.CliSyntax.PREFIX_CLASS;
-import static tassist.address.model.person.ClassNumber.DEFAULT_CLASS;
+import static tassist.address.logic.parser.CliSyntax.PREFIX_GITHUB;
 import static tassist.address.model.person.StudentId.VALIDATION_REGEX;
 
 import java.util.logging.Logger;
@@ -32,16 +32,19 @@ public class ClassCommandParser implements Parser<ClassCommand> {
     public ClassCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CLASS);
-        String preamble = argMultimap.getPreamble().trim();
+        String trimmedArgs = argMultimap.getPreamble().trim();
 
-        if (preamble.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ClassCommand.MESSAGE_USAGE));
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_CLASS);
 
-        String classNumberString = argMultimap.getValue(PREFIX_CLASS)
-                .filter(value -> !value.isEmpty()).orElse(DEFAULT_CLASS);
+        String classNumberString = argMultimap.getValue(PREFIX_CLASS).orElse("");
+        if (argMultimap.getValue(PREFIX_GITHUB).isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE));
+        }
+
         ClassNumber classNumber;
         try {
             classNumber = new ClassNumber(classNumberString);
@@ -49,10 +52,9 @@ public class ClassCommandParser implements Parser<ClassCommand> {
             throw new ParseException(MESSAGE_INVALID_CLASS, e);
         }
 
-        if (preamble.matches(VALIDATION_REGEX)) {
+        if (trimmedArgs.matches(VALIDATION_REGEX)) {
             try {
-                logger.info("Parsing ClassCommand using student ID: " + preamble);
-                StudentId studentId = ParserUtil.parseStudentId(preamble);
+                StudentId studentId = ParserUtil.parseStudentId(trimmedArgs);
                 return new ClassCommand(studentId, classNumber);
             } catch (IllegalValueException ive) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), ive);
@@ -61,12 +63,10 @@ public class ClassCommandParser implements Parser<ClassCommand> {
 
         Index index;
         try {
-            logger.info("Parsing ClassCommand using index: " + preamble);
-            index = ParserUtil.parseIndex(preamble);
+            index = ParserUtil.parseIndex(trimmedArgs);
             return new ClassCommand(index, classNumber);
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ClassCommand.MESSAGE_USAGE), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MESSAGE_USAGE), ive);
         }
     }
 }
