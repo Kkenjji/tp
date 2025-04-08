@@ -8,7 +8,8 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) from NUS Scho
 * Table of Contents
 {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
@@ -45,7 +46,8 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) from NUS Scho
 
 9. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Tips
 
 1. If you are already familiar with TAssist, you can jump straight to our [Command Summary Table](#Command-summary) to view all available commands.
@@ -69,8 +71,7 @@ TAssist is a **desktop application** for Teaching Assistants (TAs) from NUS Scho
    or <br>
    `github A1234567B g/https://github.com/johndoe`<br>
 
---------------------------------------------------------------------------------------------------------------------
-
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -110,6 +111,7 @@ Format: `help`
 💡 <strong>Tip:</strong> You can open also do this by pressing <code>F1</code>
 </div>
 
+<div style="page-break-after: always;"></div>
 
 ### Adding a student: `add`
 
@@ -128,6 +130,8 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@u.nus.edu s/A0000000B pt/ProjectTeam1 c/T01 t/ExchangeStudent pr/50`
 * `add n/Betsy Crowe t/friend e/betsycrowe@u.nus.edu s/A0123456U g/https://github.com/betsy p/1234567 t/LifeScienceMajor`
 ![add_command](images/AddCommand.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Listing, Filtering and Sorting students : `list`
 
@@ -174,6 +178,9 @@ Examples:
   Displays students with the Team name 'Bang Bang', matched case-insensitively.
 
 ![list_command](images/ListCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Editing a student : `edit`
 
 Edits an existing student in the student list.
@@ -197,6 +204,9 @@ Examples:
     Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
 ![edit_command](images/EditCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Locating student(s) by Name, StudentID, or Class: `find`
 
 Finds students whose names contain any of the given inputs, whose student ID matches exactly, or whose class number matches exactly.
@@ -217,6 +227,8 @@ Examples:
   ![result for 'find john alice'](images/UserGuideFindCommand1.png)
 * `find A1234567B` returns the student with that exact student ID
 * `find T01` returns all students in tutorial class T01
+
+<div style="page-break-after: always;"></div>
 
 ### Assigning or Removing a tutorial class: `class`
 
@@ -242,6 +254,9 @@ Examples:
    Assigns class R05 to the student with student ID `A1234567B`.
 
 ![class_command](images/ClassCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Updating a student's repository link: `repo`
 
 Updates the **GitHub repository URL** of a student, identified by either their displayed index or student ID.
@@ -287,6 +302,9 @@ or `repo STUDENT_ID r/REPOSITORY_URL`
   Updates the repository for student with student ID `A0789435N` to the specified Repository URL.
 
 ![repo_command](images/RepoCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Updating a student's progress value: `progress`
 
 Updates the **progress value** of a student.
@@ -305,6 +323,9 @@ Examples:
   Sets the progress of the student with Student ID A1234567B to 50%.
 
 ![progress_command](images/ProgressCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Updating a student's GitHub Link: `github`
 
 Updates the **GitHub URL** of a student, identified by either their displayed index or student ID.
@@ -331,6 +352,9 @@ Examples:
 * `github 3 g/` removes the 3rd student's GitHub link.
 
 ![github_command](images/GithubCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Opening a student's GitHub page: `open`
 
 Opens the GitHub page of a student, identified by either their displayed **index** or **student ID**, in your default web browser.
@@ -344,6 +368,8 @@ Format: `open INDEX` or `open STUDENT_ID`
 Examples:
 * `list` followed by `open 1` opens the GitHub page of the first student shown in the list.
 * `open A1234567B` opens the GitHub page of the student with student ID `A1234567B`.
+
+<div style="page-break-after: always;"></div>
 
 ### Adding a new assignment/timed event: `assignment`
 
@@ -363,8 +389,10 @@ Examples:
 * `assignment n/Quiz 1 d/10-05` <br>
   Adds an event named "Quiz 1" with the deadline on April 10 of the current year.
 
-### Viewing the timed event list and their indices: `view`
 ![assignment_command](images/AssignmentCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Viewing the timed event list and their indices: `view`
 
 **Lists all timed events** in the system.
@@ -382,6 +410,9 @@ Examples:<br>
   Displayed the timed event list, and assigns the 3rd timed event to all students in class T01.
 
 ![view_command](images/ViewCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Assigning a timed event/assignment: `assign`
 
 **Assigns a timed event** using index in time event list to one or more students identified by their displayed index, student ID, or class number.
@@ -404,6 +435,9 @@ Examples:
   Assigns the first timed event to all students in class T01.
 
 ![assign_command](images/AssignCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Unassigning and Removing a Timed Event: `unassign`
 
 **Removes a timed event** from all assigned students and **deletes** the event from the timed event list.
@@ -424,6 +458,9 @@ Example:
   Unassigns the first timed event from all students and deletes the event from the list.
 
 ![unassign_command](images/UnassignCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Viewing Upcoming Events Calendar
 
 TAssist provides a **calendar-style view** to help you visualize upcoming assignments and timed events.
@@ -437,6 +474,9 @@ TAssist provides a **calendar-style view** to help you visualize upcoming assign
 * An empty calendar will be shown if there are no current assignments.
 
 ![calendar_view](images/CalendarView.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Deleting a student : `delete`
 
 Deletes the specified student from the student list, identified by either their displayed index or student ID.
@@ -458,6 +498,9 @@ Examples:
 * `delete A1234567B` deletes the student with student ID A1234567B after confirmation.
 
 ![delete_command](images/DeleteCommand.png)
+
+<div style="page-break-after: always;"></div>
+
 ### Clearing all entries : `clear`
 
 **Clears all entries** from the student list.
@@ -481,6 +524,8 @@ Examples:
 * `import C:\Users\Alice\Documents\T01.csv` (Windows) <br>
   Imports the CSV file located at `C:\Users\Alice\Documents\T01.csv` containing students and timed events.
 
+<div style="page-break-after: always;"></div>
+
 ### Exporting data : `export`
 
 **Exports the current student and active timed event data** to a CSV file. The data is written in a structured format where students' details are saved along with active timed events.
@@ -498,6 +543,8 @@ Examples:
 
 * `export C:\Users\Alice\Documents\T01.csv` (Windows) <br>
   Exports the current data containing students and timed events to `C:\Users\Alice\Documents\T01.csv`.
+
+<div style="page-break-after: always;"></div>
 
 ### Exiting the program : `exit`
 
@@ -519,7 +566,8 @@ If your changes to the data file makes its format invalid, TAssist will discard 
 Furthermore, certain edits can cause TAssist to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
----------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
+
 ## Parameters
 
 ### `NAME`
@@ -642,14 +690,12 @@ Examples of valid project team values:
 - Team42
 - dev-x
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TAssist home folder.
-
---------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
@@ -663,7 +709,7 @@ Examples of valid project team values:
    "Name should only contain alphanumeric characters and spaces, and it should not be blank."<br>
    This is because pr/30 and ab/xx are not valid parameters for the assignment command.
 
---------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
